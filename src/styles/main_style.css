@@ -233,28 +233,26 @@
     padding: 0 15%;
 }
 
-/* Стилі для AccordionItem */
 .custom-accordion-item {
-    border: 1px solid #14532d; /* Зелена рамка для AccordionItem */
-    border-radius: 8px; /* Закруглені кути */
-    margin-bottom: 10px; /* Відступи між елементами */
+    border: 1px solid #14532d;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 .nextui-accordion-item-header {
-    background: transparent; /* Без фону */
-    border: none; /* Без бордера */
-    color: #00410a; /* Ваш зелений колір */
-    font-family: 'Craftwork Grotesk', sans-serif; /* Ваш шрифт */
-    font-weight: 600; /* Вага шрифта */
-    font-size: 1.5rem; /* Розмір шрифта */
-    text-align: left; /* Вирівнювання тексту по лівому краю */
-    width: 100%; /* Повна ширина */
-    cursor: pointer; /* Змінюємо курсор на вказівник */
+    background: transparent;
+    border: none;
+    color: #00410a;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
 }
 
-/* Стилі для контенту AccordionItem */
 .custom-accordion-content {
-    background-color: #fcfec3; /* Світло-зелений фон для контенту */
+    background-color: #fcfec3;
     padding: 15px;
     color: #00410a;
     border-radius: 8px;
@@ -284,4 +282,49 @@
 
 .custom-accordion-item svg {
     rotate: 270deg;
+}
+
+.text-container {
+    padding: 0 10%;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    color: #00410a;
+}
+
+.content-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.list-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-left: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.list-text ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    padding-left: 20px;
+}
+
+.list-text li {
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.final-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.text-container br {
+    margin-bottom: 10px;
 }
