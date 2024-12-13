@@ -1,23 +1,17 @@
 import React from "react";
 import {BrowserRouter, Routes, Route, Link, Navigate, useLocation} from 'react-router-dom';
 import MainPage from "./pages/MainPage";
-import {Button, NextUIProvider} from "@nextui-org/react";
+import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import {ThemeSwitcher} from "./components/ThemeSwitcher";
-import Header from "./components/Header";
 
 function App() {
     return (
         <BrowserRouter>
             <NextUIProvider>
                 <NextThemesProvider attribute="class" defaultTheme="light">
-                    <Header/>
-                    <ThemeSwitcher>
-                    </ThemeSwitcher>
-                    <Button>lol</Button>
-
+                    <RoutesComponent/>
                 </NextThemesProvider>
-                <RoutesComponent/>
             </NextUIProvider>
 
         </BrowserRouter>
@@ -29,7 +23,7 @@ function RoutesComponent() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Navigate to="/main"/>}/>
+                <Route path="/main" element={<MainPage/>}/>
             </Routes>
             {location.pathname === '/main'}
         </>
@@ -37,3 +31,6 @@ function RoutesComponent() {
 }
 
 export default App;
+
+// <ThemeSwitcher>
+// </ThemeSwitcher>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './header.module.css';
+import styles from '../styles/header.module.css';
 import { ReactComponent as Frame } from '../assets/Frame.svg';
 import { ReactComponent as Logout } from '../assets/logout.svg';
 
@@ -13,14 +13,14 @@ function Header() {
             </div>
 
             <div className={styles.navLinkWrapper}>
+                <Link to="#section4" className={styles.navLink}>
+                    Про нас
+                </Link>
                 <Link to="#section2" className={styles.navLink}>
                     Фахівці
                 </Link>
                 <Link to="#section3" className={styles.navLink}>
                     Підібрати фахівця
-                </Link>
-                <Link to="#section4" className={styles.navLink}>
-                    Про нас
                 </Link>
                 <Link to="#logout" className={styles.navLink}>
                     <div className={styles.logoutWrapper}>
