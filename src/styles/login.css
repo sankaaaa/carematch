@@ -153,3 +153,8 @@
     font-family: 'Craftwork Grotesk', sans-serif;
     margin-left: -10px;
 }
+
+.error {
+    color: darkred;
+    margin-top: 2%;
+}

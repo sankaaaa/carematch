@@ -25,7 +25,7 @@ function RoutesComponent() {
             <Routes>
                 <Route path="/main" element={<MainPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/" element={<Navigate to="/main" />} />
+                <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
         </>
     );
