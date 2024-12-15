@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
-import {ReactComponent as Frame} from '../assets/Frame.svg';
+import { ReactComponent as Frame } from '../assets/Frame.svg';
 import googleIcon from '../assets/google.png';
 import supabase from '../config/databaseClient';
 
@@ -16,10 +16,10 @@ const LoginPage = () => {
         if (email && password) {
             try {
                 const { data, error } = await supabase
-                    .from('doctors')
+                    .from('patients')
                     .select('*')
-                    .or(`doc_login.eq.${email},email.eq.${email}`)
-                    .eq('doc_password', password)
+                    .or(`pat_login.eq.${email},email.eq.${email}`)
+                    .eq('pat_password', password)
                     .single();
 
                 if (error) {
@@ -41,6 +41,12 @@ const LoginPage = () => {
         }
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     return (
         <div className="login-page">
             <div className="logo">
@@ -54,7 +60,6 @@ const LoginPage = () => {
                     <p>Введіть свої дані для входу в обліковий запис</p>
                 </div>
 
-
                 <button className="google-button">
                     <img src={googleIcon} alt="Google Icon" className="google-icon"/> Увійти з Google
                 </button>
@@ -67,6 +72,7 @@ const LoginPage = () => {
                         placeholder="Email/Логін"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onKeyDown={handleKeyPress}
                     />
                 </div>
 
@@ -76,6 +82,7 @@ const LoginPage = () => {
                         placeholder="Пароль"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        onKeyDown={handleKeyPress}
                     />
                 </div>
 
