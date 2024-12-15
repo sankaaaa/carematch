@@ -133,6 +133,21 @@
     left: 622px;
 }
 
+.stat-item-1,
+.stat-item-2,
+.stat-item-3,
+.stat-item-4 {
+    position: absolute;
+    transition: transform 0.3s ease;
+}
+
+.stat-item-1:hover,
+.stat-item-2:hover,
+.stat-item-3:hover,
+.stat-item-4:hover {
+    transform: scale(1.05);
+}
+
 .block3 {
     display: flex;
     justify-content: center;
@@ -185,11 +200,11 @@
 
 .stat-title {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 600;
     font-family: 'Craftwork Grotesk', sans-serif;
-    margin-bottom: 2%;
-    margin-top: 6%;
+    margin-bottom: 1%;
+    margin-top: 5%;
 }
 
 .stat-subtitle-container {
@@ -327,4 +342,88 @@
 
 .text-container br {
     margin-bottom: 10px;
+}
+
+
+
+
+.Group15 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 5%;
+}
+
+.Group16 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.Rectangle4,
+.Rectangle5,
+.Rectangle6,
+.Rectangle7 {
+    background-color: #fefcbf;
+    border: 2px solid #00410a;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.Rectangle4,
+.Rectangle5 {
+    width: 18rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transition: background-color 0.3s ease; /* Плавний перехід для фону */
+}
+
+.Rectangle4:hover,
+.Rectangle5:hover {
+    background-color: #00410a;
+    cursor: pointer;
+}
+
+.Rectangle4:hover .phone-numbers,
+.Rectangle5:hover .phone-numbers {
+    color: #fefcbf;
+    cursor: pointer;
+}
+
+.Rectangle6,
+.Rectangle7 {
+    width: 30rem;
+}
+
+.text-title {
+    color: #00410a;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    font-family: 'Craftwork Grotesk', sans-serif;
+}
+
+.text-description {
+    color: #00410a;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    margin-top: 1%;
+}
+
+.phone-numbers {
+    color: #00410a;
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    line-height: 1.5;
+    padding-left: 2%;
+    transition: color 0.3s ease;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/main_style.css';
 import {Button, Accordion, AccordionItem} from "@nextui-org/react";
 import mainImage from '../assets/main.png';
@@ -278,6 +279,37 @@ const MainPage = () => {
             </div>
 
 
+            <div className="Group15">
+                <div className="text-green text-5xl font-semibold stat-title text-center mb-8">
+                    Екстрені служби
+                </div>
+                <div className="Group16">
+                    <div className="Rectangle6">
+                        <p className="text-description">
+                            <strong>Цілодобова гаряча лінія психологічної підтримки для ветеранів</strong><br/><br/>
+                            Спеціалізована телефонна служба, де кваліфіковані психологи доступні 24/7 для надання
+                            консультацій, підтримки в кризових ситуаціях, а також направлення до відповідних
+                            спеціалістів для довгострокової роботи.
+                        </p>
+                        <div className="Rectangle5">
+                            <div className="phone-numbers">(067) 594 94 46<br/>(095) 913 69 41</div>
+                        </div>
+                    </div>
+
+                    <div className="Rectangle7">
+                        <p className="text-description">
+                            <strong>Мобільні групи кризової психологічної допомоги</strong><br/><br/>
+                            Команди фахівців, які виїжджають до ветеранів за запитом, щоб оперативно надати підтримку у
+                            випадках важких емоційних станів, суїцидальних думок або інших критичних ситуацій, де
+                            потрібна негайна допомога.
+                        </p>
+                        <div className="Rectangle5">
+                            <div className="phone-numbers">(067) 594 94 46<br/>(095) 913 69 41</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Footer/>
         </div>
     );
 };

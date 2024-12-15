@@ -19,13 +19,12 @@ function App() {
 }
 
 function RoutesComponent() {
-    const location = useLocation();
     return (
         <>
             <Routes>
                 <Route path="/main" element={<MainPage/>}/>
+                <Route path="/" element={<Navigate to="/main" />} />
             </Routes>
-            {location.pathname === '/main'}
         </>
     );
 }
