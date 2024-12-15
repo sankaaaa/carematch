@@ -43,7 +43,7 @@ const MainPage = () => {
             </div>
 
 
-            <div className="stats-block">
+            <div id="stats-block" className="stats-block">
                 <div className="stat-item stat-item-1">
                     <span className="stat-value">50 000+</span>
                     <span className="stat-descriptiona">сесій проведено</span>

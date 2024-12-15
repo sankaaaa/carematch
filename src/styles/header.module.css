@@ -32,6 +32,10 @@
     font-family: 'Craftwork Grotesk', sans-serif;
     text-decoration: none;
     margin: 0 40px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .navLinkWrapper {

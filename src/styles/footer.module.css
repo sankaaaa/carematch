@@ -4,10 +4,10 @@
     background-color: #d9f99d;
     display: flex;
     align-items: center;
-    padding: 20px 40px;
     box-sizing: border-box;
     overflow: hidden;
     position: relative;
+    padding: 20px 40px 30px;
 }
 
 .logo {
