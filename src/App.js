@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route, Link, Navigate, useLocation} from 'react-r
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import CreateAccount from "./pages/CreateAccount";
 import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import {ThemeSwitcher} from "./components/ThemeSwitcher";
@@ -27,7 +28,8 @@ function RoutesComponent() {
                 <Route path="/main" element={<MainPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/forgot-password" element={<ResetPasswordPage/>}/>
-                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/create-account" element={<CreateAccount/>}/>
+                <Route path="/" element={<Navigate to="/login"/>}/>
             </Routes>
         </>
     );
