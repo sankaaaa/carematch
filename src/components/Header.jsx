@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/header.module.css';
-import {ReactComponent as Frame} from '../assets/Frame.svg';
-import {ReactComponent as Logout} from '../assets/logout.svg';
+import { ReactComponent as Frame } from '../assets/Frame.svg';
+import { ReactComponent as Logout } from '../assets/logout.svg';
 
 function Header() {
     const navigate = useNavigate();
+
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -13,19 +14,22 @@ function Header() {
 
             window.scrollTo({
                 top: sectionTop - 20,
-                behavior: 'smooth'
+                behavior: 'smooth',
             });
         }
     };
 
     const handleLogout = () => {
-        navigate('/login'); // Редірект на сторінку логіну
+        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
+        localStorage.clear();
+        navigate('/login');
     };
 
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <Frame className={styles.frameIcon}/>
+                <Frame className={styles.frameIcon} />
                 <div className={styles.logoText}>CareMatch</div>
             </div>
 

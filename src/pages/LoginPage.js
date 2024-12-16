@@ -8,7 +8,6 @@ import supabase from '../config/databaseClient';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ const LoginPage = () => {
             try {
                 const { data, error } = await supabase
                     .from('patients')
-                    .select('*')
+                    .select('patient_id')
                     .or(`pat_login.eq.${email},email.eq.${email}`)
                     .eq('pat_password', password)
                     .single();
@@ -28,13 +27,17 @@ const LoginPage = () => {
 
                 if (data) {
                     console.log('Логін успішний: ', data);
+                    localStorage.setItem('patient_id', data.patient_id);
+                    console.log(data.patient_id);
                     navigate('/main');
                 } else {
                     setError('Невірний логін або пароль');
+                    localStorage.removeItem('patient_id');
                 }
             } catch (error) {
                 console.error('Помилка при логіні: ', error.message);
                 setError('Сталася помилка при вході');
+                localStorage.removeItem('patient_id');
             }
         } else {
             setError('Будь ласка, введіть всі дані');
@@ -50,7 +53,7 @@ const LoginPage = () => {
     return (
         <div className="login-page">
             <div className="logo">
-                <Frame className="frameIcon"/>
+                <Frame className="frameIcon" />
                 <div className="logoText">CareMatch</div>
             </div>
 
@@ -61,7 +64,7 @@ const LoginPage = () => {
                 </div>
 
                 <button className="google-button">
-                    <img src={googleIcon} alt="Google Icon" className="google-icon"/> Увійти з Google
+                    <img src={googleIcon} alt="Google Icon" className="google-icon" /> Увійти з Google
                 </button>
 
                 <div className="divider">або</div>
@@ -87,18 +90,17 @@ const LoginPage = () => {
                 </div>
 
                 <div className="options">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={rememberMe}
-                            onChange={() => setRememberMe(!rememberMe)}
-                        />
-                        Запам’ятати мене
-                    </label>
-                    <Link to="/forgot-password" className="forgot-password-link">Забув/-ла пароль</Link>
+                    <Link to="/create-account" className="create-account-button">
+                        Створити акаунт
+                    </Link>
+                    <Link to="/forgot-password" className="forgot-password-link">
+                        Забув/-ла пароль
+                    </Link>
                 </div>
 
-                <button className="login-button" onClick={handleLogin}>Вхід</button>
+                <button className="login-button" onClick={handleLogin}>
+                    Вхід
+                </button>
                 {error && <div className="error">{error}</div>}
             </div>
 
