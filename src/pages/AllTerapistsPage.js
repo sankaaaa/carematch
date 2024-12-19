@@ -52,7 +52,7 @@ const AllTerapistsPage = () => {
                         return `${years} роки`;
                     }
 
-                    return `${years} років `;
+                    return `${years} років`;
                 };
 
                 const formattedTherapists = doctors.map(doctor => {
@@ -93,7 +93,17 @@ const AllTerapistsPage = () => {
         <div className="all-terapists-container">
             <Header/>
             {loading ? (
-                <p>Завантаження...</p>
+                <div className="banter-loader">
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                    <div className="banter-loader__box"></div>
+                </div>
             ) : (
                 <div className="cards-container">
                     {therapists.map((therapist, index) => (

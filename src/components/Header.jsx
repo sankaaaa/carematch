@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import styles from '../styles/header.module.css';
-import { ReactComponent as Frame } from '../assets/Frame.svg';
-import { ReactComponent as Logout } from '../assets/logout.svg';
+import {ReactComponent as Frame} from '../assets/Frame.svg';
+import {ReactComponent as Logout} from '../assets/logout.svg';
 import {Button} from "@nextui-org/react";
 
 function Header() {
@@ -31,15 +31,20 @@ function Header() {
         navigate('/login');
     };
 
+    const handleAboutUsClick = () => {
+        navigate('/main', {replace: true});
+        setTimeout(() => scrollToSection('stats-block'), 100);
+    };
+
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <Frame className={styles.frameIcon} />
+                <Frame className={styles.frameIcon}/>
                 <div className={styles.logoText}>CareMatch</div>
             </div>
 
             <div className={styles.navLinkWrapper}>
-                <button onClick={() => scrollToSection('stats-block')} className={styles.navLink}>
+                <button onClick={handleAboutUsClick} className={styles.navLink}>
                     Про нас
                 </button>
                 <Button onPress={handleAllTerapists} className={styles.navLink}>
@@ -50,7 +55,7 @@ function Header() {
                 </Link>
                 <button onClick={handleLogout} className={styles.navLink}>
                     <div className={styles.logoutWrapper}>
-                        <Logout className={styles.logoutIcon} />
+                        <Logout className={styles.logoutIcon}/>
                         <span>Вийти</span>
                     </div>
                 </button>
