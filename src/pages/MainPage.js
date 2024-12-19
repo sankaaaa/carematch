@@ -14,7 +14,7 @@ const MainPage = () => {
     const navigate = useNavigate();
 
     const handleAllTerapists = () => {
-        navigate('/all-terapists');
+        navigate('/all-therapists');
     };
 
     return (

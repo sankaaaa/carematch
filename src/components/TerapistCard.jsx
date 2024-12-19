@@ -1,7 +1,11 @@
 import React from 'react';
 import "../styles/terapist-card.css";
 
-const TerapistCard = ({ name, experience, location, sessions, reviews, price, specialties, professions }) => {
+const TerapistCard = ({name, experience, location, sessions, reviews, price, specialties, professions}) => {
+    const hasMoreSpecialties = specialties.length > 3;
+    const displayedSpecialties = hasMoreSpecialties ? specialties.slice(0, 3) : specialties;
+    const remainingCount = specialties.length - 3;
+
     return (
         <div className="card-terapist">
             <div className="profile-image">
@@ -11,21 +15,20 @@ const TerapistCard = ({ name, experience, location, sessions, reviews, price, sp
             <div className="info-professions">
                 <div className="details-container">
                     <p className="details">{experience} досвіду</p>
-                    <p className="details">Офлайн: {location}</p>
-                    <p className="details">{sessions} сесій / {reviews} відгук</p>
+                    <p className="details">{location}</p>
                 </div>
                 <div className="professions">
-                    <div className="price">{price}₴</div>
                     {professions.map((profession, index) => (
                         <span key={index} className="profession">{profession}</span>
                     ))}
                 </div>
             </div>
-            <span>З чим працюю:</span>
+            <span id="spanID">З чим працюю:</span>
             <div className="specialties">
-                {specialties.map((specialty, index) => (
+                {displayedSpecialties.map((specialty, index) => (
                     <span key={index} className="specialty">{specialty}</span>
                 ))}
+                {hasMoreSpecialties && <span className="specialty more-specialties">+{remainingCount}</span>}
             </div>
 
             <button className="more-button">Дізнатися більше</button>

@@ -30,7 +30,7 @@ function RoutesComponent() {
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/forgot-password" element={<ResetPasswordPage/>}/>
                 <Route path="/create-account" element={<CreateAccount/>}/>
-                <Route path="/all-terapists" element={<AllTerapistsPage/>}/>
+                <Route path="/all-therapists" element={<AllTerapistsPage/>}/>
                 <Route path="/" element={<Navigate to="/login"/>}/>
             </Routes>
         </>

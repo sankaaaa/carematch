@@ -9,7 +9,7 @@ function Header() {
     const navigate = useNavigate();
 
     const handleAllTerapists = () => {
-        navigate('/all-terapists');
+        navigate('/all-therapists');
     };
 
     const scrollToSection = (sectionId) => {
