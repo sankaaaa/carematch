@@ -3,9 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/header.module.css';
 import { ReactComponent as Frame } from '../assets/Frame.svg';
 import { ReactComponent as Logout } from '../assets/logout.svg';
+import {Button} from "@nextui-org/react";
 
 function Header() {
     const navigate = useNavigate();
+
+    const handleAllTerapists = () => {
+        navigate('/all-terapists');
+    };
 
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
@@ -37,9 +42,9 @@ function Header() {
                 <button onClick={() => scrollToSection('stats-block')} className={styles.navLink}>
                     Про нас
                 </button>
-                <Link to="#section2" className={styles.navLink}>
+                <Button onPress={handleAllTerapists} className={styles.navLink}>
                     Фахівці
-                </Link>
+                </Button>
                 <Link to="#section3" className={styles.navLink}>
                     Підібрати фахівця
                 </Link>

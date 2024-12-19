@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import CreateAccount from "./pages/CreateAccount";
+import AllTerapistsPage from "./pages/AllTerapistsPage";
 import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import {ThemeSwitcher} from "./components/ThemeSwitcher";
@@ -29,6 +30,7 @@ function RoutesComponent() {
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/forgot-password" element={<ResetPasswordPage/>}/>
                 <Route path="/create-account" element={<CreateAccount/>}/>
+                <Route path="/all-terapists" element={<AllTerapistsPage/>}/>
                 <Route path="/" element={<Navigate to="/login"/>}/>
             </Routes>
         </>
