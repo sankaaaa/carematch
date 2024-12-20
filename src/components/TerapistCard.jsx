@@ -1,15 +1,18 @@
 import React from 'react';
 import "../styles/terapist-card.css";
 
-const TerapistCard = ({name, experience, location, sessions, reviews, price, specialties, professions}) => {
+const TerapistCard = ({ name, experience, location, specialties, professions, photo }) => {
     const hasMoreSpecialties = specialties.length > 3;
     const displayedSpecialties = hasMoreSpecialties ? specialties.slice(0, 3) : specialties;
     const remainingCount = specialties.length - 3;
-
     return (
         <div className="card-terapist">
             <div className="profile-image">
-                <div className="placeholder-image"></div>
+                {photo ? (
+                    <img src={photo} alt={name} className="profile-photo" />
+                ) : (
+                    <div className="placeholder-image"></div>
+                )}
             </div>
             <h2 className="name">{name}</h2>
             <div className="info-professions">
@@ -30,10 +33,10 @@ const TerapistCard = ({name, experience, location, sessions, reviews, price, spe
                 ))}
                 {hasMoreSpecialties && <span className="specialty more-specialties">+{remainingCount}</span>}
             </div>
-
             <button className="more-button">Дізнатися більше</button>
         </div>
     );
 };
+
 
 export default TerapistCard;

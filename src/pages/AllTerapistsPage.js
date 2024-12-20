@@ -15,7 +15,7 @@ const AllTerapistsPage = () => {
             try {
                 const {data: doctors, error: doctorsError} = await supabase
                     .from('doctors')
-                    .select('doctor_id, first_name, last_name, specialization, experience, meet_fomat, city');
+                    .select('doctor_id, first_name, last_name, specialization, experience, meet_fomat, city, doc_photo');
 
                 if (doctorsError) throw doctorsError;
 
@@ -70,14 +70,16 @@ const AllTerapistsPage = () => {
                     }
 
                     return {
+                        doctor_id: doctor.doctor_id,
                         name: `${doctor.first_name} ${doctor.last_name}`,
                         experience: formatExperience(doctor.experience),
                         location: location,
                         professions: professions,
-                        specialties: doctorSpecialties
+                        specialties: doctorSpecialties,
+                        photo: doctor.doc_photo,
                     };
                 });
-
+                formattedTherapists.sort((a, b) => a.doctor_id - b.doctor_id);
                 setTherapists(formattedTherapists);
             } catch (error) {
                 console.error('Error fetching therapists:', error);

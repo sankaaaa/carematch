@@ -4,7 +4,7 @@
     border-radius: 10px;
     width: 300px;
     text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     margin: 10px;
     font-family: 'Craftwork Grotesk', sans-serif;
     position: relative;
@@ -121,6 +121,16 @@
     white-space: normal;
     max-width: 80%;
     word-break: break-word;
+    display: block;
+}
+
+.profile-image .profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00410a;
+    margin: 0 auto 10px;
 }
 
 .banter-loader {
