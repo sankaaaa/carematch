@@ -4,10 +4,13 @@ import TerapistCard from "../components/TerapistCard";
 import "../styles/terapists-page.css";
 import supabase from '../config/databaseClient';
 import FilterComponent from '../components/FilterComponent';
+import SpecializationFilter from "../components/SpecializationFilter";
 
 const AllTerapistsPage = () => {
     const [therapists, setTherapists] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [specializations, setSpecializations] = useState([]);
+    const [selectedSpecializations, setSelectedSpecializations] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -40,6 +43,9 @@ const AllTerapistsPage = () => {
                 categoriesData.forEach(category => {
                     categoryMap[category.category_id] = category.name;
                 });
+
+                const availableSpecializations = ['Психолог', 'Психіатр', 'Психотерапевт'];
+                setSpecializations(availableSpecializations);
 
                 const formatExperience = (years) => {
                     const lastDigit = years % 10;
@@ -106,15 +112,24 @@ const AllTerapistsPage = () => {
         setSelectedCategories(selected);
     };
 
+    const handleSpecializationFilter = (selectedSpecializations) => {
+        setSelectedSpecializations(selectedSpecializations);
+    };
+
     const filteredTherapists = therapists.filter(therapist =>
-        selectedCategories.length === 0 ||
-        therapist.specialties.some(specialty => selectedCategories.includes(specialty))
+        (selectedCategories.length === 0 || therapist.specialties.some(specialty => selectedCategories.includes(specialty))) &&
+        (selectedSpecializations.length === 0 || therapist.professions.some(prof => selectedSpecializations.includes(prof)))
     );
 
     return (
         <div className="all-terapists-container">
             <Header/>
-            <FilterComponent categories={categories} onFilter={handleFilter}/>
+            <div className="filters">
+                <FilterComponent categories={categories} onFilter={handleFilter}/>
+                <SpecializationFilter specializations={specializations}
+                                      onFilterSpecialization={handleSpecializationFilter}/>
+            </div>
+
             {loading ? (
                 <div className="banter-loader">
                     <div className="banter-loader__box"></div>
