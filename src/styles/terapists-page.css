@@ -3,11 +3,118 @@
     flex-wrap: wrap;
     max-width: 1400px;
     padding: 20px 0;
-    margin: 40px auto 0;
+    margin: 0 auto;
 }
 
 .cards-container > * {
     flex: 1 1 calc(33.333% - 30px);
     max-width: calc(33.333% - 30px);
     box-sizing: border-box;
+}
+
+.all-terapists-container {
+    align-items: center;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 1380px;
+    width: 100%;
+    margin: 30px auto 0;
+    position: relative;
+}
+
+.dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    position: absolute;
+    background-color: #fcfec3;
+    z-index: 100;
+    padding: 20px;
+    box-shadow: 0 0 100vw 100vh rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    gap: 20px;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-size: 14px;
+    color: #00410a;
+    font-weight: bold;
+
+}
+
+.apply-button {
+    padding: 8px 16px;
+    background-color: #00410a;
+    color: #fcfec3;
+    border: #00410a 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.apply-button:hover {
+    background-color: #002005;
+}
+
+.clear-button {
+    padding: 8px 16px;
+    background-color: #fcfec3;
+    color: #00410a;
+    border: #00410a 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.clear-button:hover {
+    background-color: #F1F3BA;
+}
+
+.filter-button {
+    background-color: #fcfec3;
+    color: #00410a;
+    padding: 10px;
+    border: #00410a 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dropdown input[type="checkbox"] {
+    appearance: none;
+    border: 2px solid #00410a;
+    border-radius: 3px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    padding: 7px;
+    margin-bottom: -2px;
+}
+
+.dropdown input[type="checkbox"]:checked {
+    background-color: #00410a;
+}
+
+.dropdown input[type="checkbox"]:checked::before {
+    content: '✔';
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.checkbox-label {
 }

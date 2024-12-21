@@ -25,6 +25,8 @@
     text-align: left;
     margin-top: 45px;
     color: #00410a;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .card-terapist span {
@@ -113,15 +115,17 @@
 }
 
 .specialty {
-    background-color: #00410a;
-    color: #fcfec3;
+    background-color: #fcfec3;
+    color: #00410a;
+    border: #00410a 2px solid;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 14px !important;
     white-space: normal;
     max-width: 80%;
     word-break: break-word;
     display: block;
+    font-weight: bolder;
 }
 
 .profile-image .profile-photo {

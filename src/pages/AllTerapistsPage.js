@@ -3,13 +3,16 @@ import Header from '../components/Header';
 import TerapistCard from "../components/TerapistCard";
 import "../styles/terapists-page.css";
 import supabase from '../config/databaseClient';
+import FilterComponent from '../components/FilterComponent';
 
 const AllTerapistsPage = () => {
     const [therapists, setTherapists] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchTherapists = async () => {
+        const fetchData = async () => {
             setLoading(true);
 
             try {
@@ -25,14 +28,16 @@ const AllTerapistsPage = () => {
 
                 if (doctorCategoriesError) throw doctorCategoriesError;
 
-                const {data: categories, error: categoriesError} = await supabase
+                const {data: categoriesData, error: categoriesError} = await supabase
                     .from('categories')
                     .select('category_id, name');
 
                 if (categoriesError) throw categoriesError;
 
+                setCategories(categoriesData || []);
+
                 const categoryMap = {};
-                categories.forEach(category => {
+                categoriesData.forEach(category => {
                     categoryMap[category.category_id] = category.name;
                 });
 
@@ -58,7 +63,12 @@ const AllTerapistsPage = () => {
                 const formattedTherapists = doctors.map(doctor => {
                     const doctorSpecialties = doctorCategories
                         .filter(dc => dc.doctor_id === doctor.doctor_id)
-                        .map(dc => categoryMap[dc.category_id]);
+                        .map(dc => ({
+                            id: dc.category_id,
+                            name: categoryMap[dc.category_id],
+                        }))
+                        .sort((a, b) => a.id - b.id)
+                        .map(category => category.name);
 
                     const professions = doctor.specialization
                         ? doctor.specialization.split(',').map(prof => prof.trim())
@@ -79,21 +89,32 @@ const AllTerapistsPage = () => {
                         photo: doctor.doc_photo,
                     };
                 });
+
                 formattedTherapists.sort((a, b) => a.doctor_id - b.doctor_id);
                 setTherapists(formattedTherapists);
             } catch (error) {
-                console.error('Error fetching therapists:', error);
+                console.error('Error fetching data:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchTherapists();
+        fetchData();
     }, []);
+
+    const handleFilter = (selected) => {
+        setSelectedCategories(selected);
+    };
+
+    const filteredTherapists = therapists.filter(therapist =>
+        selectedCategories.length === 0 ||
+        therapist.specialties.some(specialty => selectedCategories.includes(specialty))
+    );
 
     return (
         <div className="all-terapists-container">
             <Header/>
+            <FilterComponent categories={categories} onFilter={handleFilter}/>
             {loading ? (
                 <div className="banter-loader">
                     <div className="banter-loader__box"></div>
@@ -108,7 +129,7 @@ const AllTerapistsPage = () => {
                 </div>
             ) : (
                 <div className="cards-container">
-                    {therapists.map((therapist, index) => (
+                    {filteredTherapists.map((therapist, index) => (
                         <TerapistCard key={index} {...therapist} />
                     ))}
                 </div>
