@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import "../styles/terapist-card.css";
 
-const TerapistCard = ({ name, experience, location, specialties, professions, photo }) => {
+const TerapistCard = ({ name, experience, location, specialties, professions, photo, doctor_id }) => {
     const hasMoreSpecialties = specialties.length > 3;
     const displayedSpecialties = hasMoreSpecialties ? specialties.slice(0, 3) : specialties;
     const remainingCount = specialties.length - 3;
+
     return (
         <div className="card-terapist">
             <div className="profile-image">
@@ -33,10 +35,11 @@ const TerapistCard = ({ name, experience, location, specialties, professions, ph
                 ))}
                 {hasMoreSpecialties && <span className="specialty more-specialties">+{remainingCount}</span>}
             </div>
-            <button className="more-button">Дізнатися більше</button>
+            <Link to={`/all-therapists/${doctor_id}`} className="more-button">
+                Дізнатися більше
+            </Link>
         </div>
     );
 };
-
 
 export default TerapistCard;

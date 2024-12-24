@@ -7,6 +7,7 @@ import FilterComponent from '../components/FilterComponent';
 import SpecializationFilter from "../components/SpecializationFilter";
 import GenderFilter from "../components/GenderFilter";
 import MeetFormatFilter from "../components/MeetFormatFilter";
+import '../styles/loader.css';
 
 const AllTerapistsPage = () => {
     const [therapists, setTherapists] = useState([]);
