@@ -18,11 +18,12 @@
 
 .filters {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: flex-start;
     max-width: 1380px;
     width: 100%;
-    margin: 30px auto 0;
+    margin: 40px auto 0;
     position: relative;
     gap: 20px;
 }
@@ -127,4 +128,41 @@
     left: 2px;
     color: #fff;
     font-size: 14px;
+}
+
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #00410a;
+}
+
+input[type="radio"]:checked {
+    accent-color: #00410a;
+    border-color: #00410a;
+}
+
+.search-input {
+    width: 20%;
+    padding: 9px;
+    font-size: 15px;
+    border: 2px solid #00410a;
+    border-radius: 5px;
+    font-family: 'Craftwork Grotesk', sans-serif;
+    color: #00410a;
+    background-color: rgba(217, 249, 157, 0.2);
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #00410a;
+    box-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
+}
+
+input::placeholder {
+    color: #00410a;
 }

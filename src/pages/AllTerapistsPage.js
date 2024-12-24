@@ -5,6 +5,8 @@ import "../styles/terapists-page.css";
 import supabase from '../config/databaseClient';
 import FilterComponent from '../components/FilterComponent';
 import SpecializationFilter from "../components/SpecializationFilter";
+import GenderFilter from "../components/GenderFilter";
+import MeetFormatFilter from "../components/MeetFormatFilter";
 
 const AllTerapistsPage = () => {
     const [therapists, setTherapists] = useState([]);
@@ -12,6 +14,9 @@ const AllTerapistsPage = () => {
     const [specializations, setSpecializations] = useState([]);
     const [selectedSpecializations, setSelectedSpecializations] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedGender, setSelectedGender] = useState([]);
+    const [selectedMeetFormat, setSelectedMeetFormat] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -21,7 +26,7 @@ const AllTerapistsPage = () => {
             try {
                 const {data: doctors, error: doctorsError} = await supabase
                     .from('doctors')
-                    .select('doctor_id, first_name, last_name, specialization, experience, meet_fomat, city, doc_photo');
+                    .select('doctor_id, first_name, last_name, specialization, experience, meet_fomat, city, doc_photo, doc_sex');
 
                 if (doctorsError) throw doctorsError;
 
@@ -93,6 +98,8 @@ const AllTerapistsPage = () => {
                         professions: professions,
                         specialties: doctorSpecialties,
                         photo: doctor.doc_photo,
+                        gender: doctor.doc_sex,
+                        meetFormat: doctor.meet_fomat,
                     };
                 });
 
@@ -116,9 +123,20 @@ const AllTerapistsPage = () => {
         setSelectedSpecializations(selectedSpecializations);
     };
 
+    const handleGenderFilter = (selectedGender) => {
+        setSelectedGender(selectedGender);
+    };
+
+    const handleMeetFormatFilter = (selectedMeetFormat) => {
+        setSelectedMeetFormat(selectedMeetFormat);
+    };
+
     const filteredTherapists = therapists.filter(therapist =>
         (selectedCategories.length === 0 || therapist.specialties.some(specialty => selectedCategories.includes(specialty))) &&
-        (selectedSpecializations.length === 0 || therapist.professions.some(prof => selectedSpecializations.includes(prof)))
+        (selectedSpecializations.length === 0 || therapist.professions.some(prof => selectedSpecializations.includes(prof))) &&
+        (selectedGender.length === 0 || selectedGender.includes('Не важливо') || selectedGender.includes(therapist.gender)) &&
+        (selectedMeetFormat.length === 0 || selectedMeetFormat.includes('Не важливо') || selectedMeetFormat.includes(therapist.meetFormat)) &&
+        therapist.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -128,6 +146,15 @@ const AllTerapistsPage = () => {
                 <FilterComponent categories={categories} onFilter={handleFilter}/>
                 <SpecializationFilter specializations={specializations}
                                       onFilterSpecialization={handleSpecializationFilter}/>
+                <GenderFilter onFilterGender={handleGenderFilter}/>
+                <MeetFormatFilter onFilterMeetFormat={handleMeetFormatFilter}/>
+                <input
+                    type="text"
+                    placeholder="Пошук"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
             </div>
 
             {loading ? (
