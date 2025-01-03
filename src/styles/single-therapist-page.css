@@ -18,7 +18,7 @@
 .therapist-photo-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
     margin-right: 20px;
 }
@@ -90,8 +90,77 @@
 
 .therapist-details {
     margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.therapist-details p,
+.therapist-details-two p {
+    margin-left: 40px;
+}
+
+.details-line {
+    display: flex;
+    align-items: center;
+}
+
+.details-line img {
+    margin-right: 8px;
 }
 
 .therapist-details-two {
     margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ther-image {
+    width: 31px;
+    height: 31px;
+}
+
+.therapist-specialization ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.therapist-specialization li {
+    margin-bottom: 5px;
+}
+
+#langimg {
+    width: 22px;
+    height: 22px;
+}
+
+.therapist-specialization {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+    margin-right: 15px;
+    background-color: #d9f99d;
+    padding: 20px 20px 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: fit-content;
+}
+
+.therapist-languages {
+    margin-top: 45px;
+    font-size: 18px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+}
+
+.therapist-languages p {
+    font-size: 16px;
+    margin-top: 12px;
+    margin-left: 30px;
 }

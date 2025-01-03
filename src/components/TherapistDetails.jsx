@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import "../styles/loader.css";
-import "../styles/therapist-page.css";
+import "../styles/single-therapist-page.css";
 import supabase from "../config/databaseClient";
 import Header from "./Header";
+import Star from '../assets/star.png';
+import Calendar from '../assets/calendar.png';
+import Lang from '../assets/lang.png'
 
 const TherapistDetails = () => {
     const {id} = useParams();
     const [therapist, setTherapist] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         const fetchTherapistDetails = async () => {
@@ -17,13 +21,39 @@ const TherapistDetails = () => {
                 const {data: doctor, error} = await supabase
                     .from("doctors")
                     .select(
-                        "doctor_id, first_name, last_name, experience, city, specialization, doc_photo, doc_date, meet_fomat, doc_session, doc_rev"
+                        "doctor_id, first_name, last_name, experience, city, specialization, doc_photo, " +
+                        "doc_date, meet_fomat, doc_session, doc_rev, doc_lang"
                     )
                     .eq("doctor_id", id)
                     .single();
 
                 if (error) throw error;
                 setTherapist(doctor);
+
+                const {data: doctorCategories, error: doctorCategoriesError} = await supabase
+                    .from('doctor_categories')
+                    .select('doctor_id, category_id')
+                    .eq('doctor_id', id);
+
+                if (doctorCategoriesError) throw doctorCategoriesError;
+
+                const {data: categoriesData, error: categoriesError} = await supabase
+                    .from('categories')
+                    .select('category_id, name');
+
+                if (categoriesError) throw categoriesError;
+
+                const categoryMap = {};
+                categoriesData.forEach(category => {
+                    categoryMap[category.category_id] = category.name;
+                });
+
+                const doctorSpecialties = doctorCategories
+                    .map(dc => categoryMap[dc.category_id])
+                    .filter(Boolean);
+
+                setCategories(doctorSpecialties);
+
             } catch (error) {
                 console.error("Error fetching therapist details:", error);
             } finally {
@@ -138,18 +168,36 @@ const TherapistDetails = () => {
                     <div className="therapist-info">
                         <p>{formatAge(age)}</p>
                         <div className="therapist-details">
-                            <div>
-                                {formatExperience(therapist.experience)}
-                                <p>{location}</p>
+                            <div className="details-line">
+                                <img className="ther-image" src={Calendar} alt="Calendar icon"/>
+                                <span>{formatExperience(therapist.experience)}</span>
                             </div>
+                            <p>{location}</p>
                         </div>
+
                         <div className="therapist-details-two">
-                            <div>
-                                {formatSessions(therapist.doc_session)}
-                                <p>{formatReviews(therapist.doc_rev)}</p>
+                            <div className="details-line">
+                                <img className="ther-image" src={Star} alt="Star icon"/>
+                                <span>{formatSessions(therapist.doc_session)}</span>
                             </div>
+                            <p>{formatReviews(therapist.doc_rev)}</p>
                         </div>
+                    </div>
+                    <div className="second-col">
                         <div className="therapist-specialization">
+                            <span>З чим працюю:</span>
+                            <ul>
+                                {categories.map((category, index) => (
+                                    <li key={index}>{category}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="therapist-languages">
+                            <div className="details-line">
+                                <img id="langimg" src={Lang} alt="Lang icon"/>
+                                <span>Мова надання послуг:</span>
+                            </div>
+                            <p>{therapist.doc_lang}</p>
                         </div>
                     </div>
                 </div>
