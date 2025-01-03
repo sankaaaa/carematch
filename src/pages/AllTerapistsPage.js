@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import TerapistCard from "../components/TerapistCard";
 import "../styles/terapists-page.css";
 import supabase from '../config/databaseClient';
@@ -171,10 +172,13 @@ const AllTerapistsPage = () => {
                     <div className="banter-loader__box"></div>
                 </div>
             ) : (
-                <div className="cards-container">
-                    {filteredTherapists.map((therapist, index) => (
-                        <TerapistCard key={index} {...therapist} />
-                    ))}
+                <div>
+                    <div className="cards-container">
+                        {filteredTherapists.map((therapist, index) => (
+                            <TerapistCard key={index} {...therapist} />
+                        ))}
+                    </div>
+                    <Footer/>
                 </div>
             )}
         </div>

@@ -1,0 +1,97 @@
+.therapist-detail-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Craftwork Grotesk", sans-serif;
+}
+
+.therapist-card {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 20px;
+    font-family: "Craftwork Grotesk", sans-serif;
+}
+
+.therapist-photo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.therapist-photo {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.therapist-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00410a;
+    margin-bottom: 20px;
+}
+
+.book-session-btn {
+    padding: 13px 18px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #00410a;
+    background-color: #fef9c3;
+    border: 2px solid #00410a;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    font-family: "Craftwork Grotesk", sans-serif;
+}
+
+.book-session-btn:hover {
+    background-color: #00410a;
+    color: #fcfec3;
+}
+
+.therapist-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 18px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+    padding-top: 8px;
+    margin-left: 20px;
+}
+
+.therapist-specialization {
+    margin-top: 20px;
+}
+
+.therapist-specialization h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00410a;
+    margin-bottom: 10px;
+}
+
+.therapist-specialization ul {
+    font-size: 1rem;
+    color: #00410a;
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.therapist-details {
+    margin-top: 45px;
+}
+
+.therapist-details-two {
+    margin-top: 55px;
+}
