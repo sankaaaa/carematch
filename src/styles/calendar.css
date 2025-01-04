@@ -6,7 +6,6 @@
     border-radius: 25px;
     overflow: hidden;
     padding: 0 40px 35px 40px;
-    margin-bottom: 100px;
 }
 
 .container {
@@ -317,7 +316,7 @@ span#pre-year {
 }
 
 .session-form {
-    margin-top: 40px;
+    margin-top: 25px;
     font-size: 17px;
     color: #00410a;
     font-family: "Craftwork Grotesk", sans-serif;
@@ -337,7 +336,7 @@ span#pre-year {
     transition: background-color 0.3s;
     font-family: "Craftwork Grotesk", sans-serif;
     max-width: 60%;
-    margin-top: 5px;
+    margin-top: -35px;
 }
 
 .confirmsession:hover {

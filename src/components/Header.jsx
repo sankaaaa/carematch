@@ -53,6 +53,9 @@ function Header() {
                 <Link to="#section3" className={styles.navLink}>
                     Підібрати фахівця
                 </Link>
+                <Link to="#section3" className={styles.navLink}>
+                    Мій кабінет
+                </Link>
                 <button onClick={handleLogout} className={styles.navLink}>
                     <div className={styles.logoutWrapper}>
                         <Logout className={styles.logoutIcon}/>
