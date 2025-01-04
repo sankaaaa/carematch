@@ -6,13 +6,18 @@ import supabase from "../config/databaseClient";
 import Header from "./Header";
 import Star from '../assets/star.png';
 import Calendar from '../assets/calendar.png';
-import Lang from '../assets/lang.png'
+import Lang from '../assets/lang.png';
+import Age from '../assets/age.png';
+import Footer from "./Footer";
+import TherCalendar from "./TherCalendar";
+
 
 const TherapistDetails = () => {
     const {id} = useParams();
     const [therapist, setTherapist] = useState(null);
     const [loading, setLoading] = useState(true);
     const [categories, setCategories] = useState([]);
+    const [activeSection, setActiveSection] = useState('about');
 
     useEffect(() => {
         const fetchTherapistDetails = async () => {
@@ -22,7 +27,7 @@ const TherapistDetails = () => {
                     .from("doctors")
                     .select(
                         "doctor_id, first_name, last_name, experience, city, specialization, doc_photo, " +
-                        "doc_date, meet_fomat, doc_session, doc_rev, doc_lang"
+                        "doc_date, meet_fomat, doc_session, doc_rev, doc_lang, doc_about, doc_education, doc_addition, doc_way"
                     )
                     .eq("doctor_id", id)
                     .single();
@@ -78,6 +83,22 @@ const TherapistDetails = () => {
         return age;
     };
 
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const sectionTop = section.offsetTop;
+
+            window.scrollTo({
+                top: sectionTop - 20,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    const handleBookSession = () => {
+        setTimeout(() => scrollToSection('calendar'), 100);
+    };
+
     const formatAge = (age) => {
         const lastDigit = age % 10;
         if (lastDigit === 1 && age !== 11) {
@@ -122,6 +143,10 @@ const TherapistDetails = () => {
         }
     };
 
+    const handleRadioChange = (section) => {
+        setActiveSection(section);
+    };
+
     if (loading) {
         return (
             <div className="banter-loader">
@@ -163,10 +188,11 @@ const TherapistDetails = () => {
                         <div className="therapist-name">
                             {therapist.first_name} {therapist.last_name}
                         </div>
-                        <button className="book-session-btn">Забронювати сеанс</button>
                     </div>
                     <div className="therapist-info">
-                        <p>{formatAge(age)}</p>
+                        <p className="age">
+                            {formatAge(age)}
+                        </p>
                         <div className="therapist-details">
                             <div className="details-line">
                                 <img className="ther-image" src={Calendar} alt="Calendar icon"/>
@@ -182,8 +208,13 @@ const TherapistDetails = () => {
                             </div>
                             <p>{formatReviews(therapist.doc_rev)}</p>
                         </div>
+
+                        <button className="book-session-btn" onClick={handleBookSession}>Забронювати сеанс</button>
                     </div>
                     <div className="second-col">
+                        <div className="details-line-two">
+                            Кваліфікація: {therapist.specialization}
+                        </div>
                         <div className="therapist-specialization">
                             <span>З чим працюю:</span>
                             <ul>
@@ -202,6 +233,61 @@ const TherapistDetails = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="mydict">
+                <div>
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            checked={activeSection === 'about'}
+                            onChange={() => handleRadioChange('about')}
+                        />
+                        <span>Про мене</span>
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            checked={activeSection === 'education'}
+                            onChange={() => handleRadioChange('education')}
+                        />
+                        <span>Освіта</span>
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            checked={activeSection === 'work'}
+                            onChange={() => handleRadioChange('work')}
+                        />
+                        <span>Підхід</span>
+                    </label>
+                </div>
+
+                {activeSection === 'about' && (
+                    <div className="section-content">
+                        <p>{therapist.doc_about}</p>
+                    </div>
+                )}
+                {activeSection === 'education' && (
+                    <div className="section-content">
+                        <p>{therapist.doc_education}</p>
+                        <p>{therapist.doc_addition}</p>
+                    </div>
+                )}
+                {activeSection === 'work' && (
+                    <div className="section-content">
+                        <p>{therapist.doc_way}</p>
+                    </div>
+                )}
+            </div>
+
+            <div id="calendar" className="calendar-section">
+                <h3>Забронювати сеанс</h3>
+                <TherCalendar/>
+            </div>
+            <Footer/>
         </div>
     );
 };

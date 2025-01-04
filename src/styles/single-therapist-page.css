@@ -50,6 +50,8 @@
     text-align: center;
     transition: background-color 0.3s;
     font-family: "Craftwork Grotesk", sans-serif;
+    max-width: 60%;
+    margin-top: 5px;
 }
 
 .book-session-btn:hover {
@@ -85,11 +87,10 @@
     font-size: 1rem;
     color: #00410a;
     list-style-type: disc;
-    margin-left: 20px;
 }
 
 .therapist-details {
-    margin-top: 45px;
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -110,7 +111,7 @@
 }
 
 .therapist-details-two {
-    margin-top: 55px;
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -163,4 +164,100 @@
     font-size: 16px;
     margin-top: 12px;
     margin-left: 30px;
+}
+
+:focus {
+    outline: 0;
+    border-color: #00410a;
+    box-shadow: 0 0 0 4px #d9f99d;
+}
+
+.mydict div {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.mydict input[type="radio"] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+
+}
+
+.mydict input[type="radio"]:checked + span {
+    box-shadow: 0 0 0 0.0625em #00410a;
+    background-color: #d9f99d;
+    z-index: 1;
+    color: #00410a;
+}
+
+label span {
+    display: block;
+    cursor: pointer;
+    background-color: #fef9c3;
+    padding: 0.375em .75em;
+    position: relative;
+    margin-left: .0625em;
+    box-shadow: 0 0 0 0.0625em #00410a;
+    letter-spacing: .05em;
+    color: #00410a;
+    text-align: center;
+    transition: background-color .5s ease;
+    font-size: 18px;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+}
+
+label:first-child span {
+    border-radius: .375em 0 0 .375em;
+}
+
+label:last-child span {
+    border-radius: 0 .375em .375em 0;
+}
+
+.section-content {
+    font-size: 18px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+    margin-right: 15px;
+    background-color: #d9f99d;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: fit-content;
+    margin-bottom: 30px;
+    max-width: 70%;
+    justify-self: center;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+.calendar-section {
+    max-width: 80%;
+    justify-self: center;
+}
+
+.calendar-section h3 {
+    justify-self: center;
+    margin-top: 7%;
+    font-size: 25px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+}
+
+.details-line-two {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #00410a;
+    font-family: "Craftwork Grotesk", sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
