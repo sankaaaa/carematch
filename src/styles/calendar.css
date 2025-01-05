@@ -4,8 +4,8 @@
     align-items: center;
     height: 30rem;
     border-radius: 25px;
-    overflow: hidden;
     padding: 0 40px 35px 40px;
+    width: 80%;
 }
 
 .container {
@@ -25,7 +25,7 @@ span#pre-year {
 
 .calendar-header {
     background: #00410a;
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     border-radius: 7px;
@@ -321,6 +321,14 @@ span#pre-year {
     color: #00410a;
     font-family: "Craftwork Grotesk", sans-serif;
     font-weight: bold;
+    width: 140%;
+    margin-left: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.session-form {
+    margin-bottom: 0;
 }
 
 .confirmsession {
@@ -335,8 +343,10 @@ span#pre-year {
     text-align: center;
     transition: background-color 0.3s;
     font-family: "Craftwork Grotesk", sans-serif;
-    max-width: 60%;
-    margin-top: -35px;
+    max-width: 30%;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    z-index: 100;
 }
 
 .confirmsession:hover {

@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import '../styles/calendar.css';
 import supabase from "../config/databaseClient";
-import { ReactComponent as Frame } from '../assets/Frame.svg';
+import {ReactComponent as Frame} from '../assets/Frame.svg';
 
 const TherCalendar = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
     const [sessionDates, setSessionDates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [sessionTime, setSessionTime] = useState(null);
+    const [sessionTimes, setSessionTimes] = useState([]);
+    const [selectedTime, setSelectedTime] = useState(null);
     const [showSessionForm, setShowSessionForm] = useState(false);
 
     const monthNames = [
@@ -45,7 +46,7 @@ const TherCalendar = () => {
                     className={`
                             ${day === currentDate.getDate() && currentYear === currentDate.getFullYear() && currentMonth === currentDate.getMonth() ? 'current-date' : ''}
                             ${isSessionDay ? 'rehearsal-date' : ''}
-                        `}                    onClick={() => handleDayClick(day, isSessionDay)}
+                        `} onClick={() => handleDayClick(day, isSessionDay)}
                 >
                     {day}
                 </div>
@@ -57,9 +58,11 @@ const TherCalendar = () => {
 
     const handleDayClick = (day, isSessionDay) => {
         if (isSessionDay) {
-            const selectedSession = sessionDates.find(session => new Date(session.date).getDate() === day);
+            const selectedSessions = sessionDates.filter(session => new Date(session.date).getDate() === day);
             setSelectedDate(day);
-            setSessionTime(selectedSession ? new Date(selectedSession.date).toLocaleTimeString() : null);
+            const times = selectedSessions.map(session => new Date(session.date).toLocaleTimeString());
+            setSessionTimes(times);
+            setSelectedTime(times.length === 1 ? times[0] : null);
             setShowSessionForm(true);
         } else {
             setShowSessionForm(false);
@@ -67,7 +70,7 @@ const TherCalendar = () => {
     };
 
     const handleConfirmSession = () => {
-        console.log('Сеанс підтверджено для дати:', selectedDate);
+        console.log('Сеанс підтверджено для дати:', selectedDate, 'та часу:', selectedTime);
         setShowSessionForm(false);
     };
 
@@ -76,34 +79,32 @@ const TherCalendar = () => {
         const fetchSessionDates = async () => {
             setLoading(true);
 
-            // Перевірка на наявність doctor_id
             if (!id) {
                 console.error('Doctor ID is undefined or missing');
+                setLoading(false);
                 return;
             }
 
             const startDate = new Date(currentYear, currentMonth, 1).toISOString();
             const endDate = new Date(currentYear, currentMonth + 1, 0, 23, 59, 59).toISOString();
 
-            const { data, error } = await supabase
-                .from('doctors')
+            const {data, error} = await supabase
+                .from('times')
                 .select('date')
-                .eq('doctor_id', id)  // Фільтруємо за doctor_id
+                .eq('doctor_id', id)
                 .gte('date', startDate)
                 .lte('date', endDate);
 
             if (error) {
                 console.error('Error fetching session dates:', error);
-                return;
+            } else {
+                setSessionDates(data);
             }
-
-            setSessionDates(data);
             setLoading(false);
         };
 
         fetchSessionDates();
     }, [currentMonth, currentYear, id]);
-
 
     const changeMonth = (direction) => {
         setLoading(true);
@@ -118,7 +119,7 @@ const TherCalendar = () => {
 
     return (
         <div className="container">
-            <Frame className="leafIcon" />
+            <Frame className="leafIcon"/>
 
             <div className="calendar">
                 <div className="calendar-header">
@@ -126,20 +127,20 @@ const TherCalendar = () => {
                     <div className="year-picker">
                         <span
                             id="pre-month"
-                            style={{ cursor: 'pointer' }}
+                            style={{cursor: 'pointer'}}
                             onClick={() => changeMonth('prev')}
                         >
                             &lt;
                         </span>
                         <span
                             id="month"
-                            style={{ cursor: 'pointer', margin: '0 10px' }}
+                            style={{cursor: 'pointer', margin: '0 10px'}}
                         >
                             {monthNames[currentMonth]}
                         </span>
                         <span
                             id="next-month"
-                            style={{ cursor: 'pointer' }}
+                            style={{cursor: 'pointer'}}
                             onClick={() => changeMonth('next')}
                         >
                             &gt;
@@ -164,8 +165,22 @@ const TherCalendar = () => {
                 {showSessionForm && (
                     <div className="session-form">
                         <h4>
-                            Дата запису: {selectedDate} {monthNames[currentMonth]} {currentYear}, {sessionTime}
-                        </h4>
+                            Дата запису: {selectedDate}.{currentMonth + 1}.{currentYear}
+                        </h4>                        {sessionTimes.length > 1 ? (
+                        sessionTimes.map((time, index) => (
+                            <label key={index}>
+                                <input
+                                    type="radio"
+                                    value={time}
+                                    checked={selectedTime === time}
+                                    onChange={() => setSelectedTime(time)}
+                                />
+                                {time}
+                            </label>
+                        ))
+                    ) : (
+                        <p>{sessionTimes[0]}</p>
+                    )}
                         <button className="confirmsession" onClick={handleConfirmSession}>
                             Підтвердити сеанс
                         </button>
@@ -173,7 +188,7 @@ const TherCalendar = () => {
                 )}
             </div>
 
-            <Frame className="leafIcon" />
+            <Frame className="leafIcon"/>
         </div>
     );
 };
