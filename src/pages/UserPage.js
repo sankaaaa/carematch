@@ -9,12 +9,13 @@ import '../styles/user-page.css';
 const UserPage = () => {
     const {patient_id} = useParams();
     const [patientData, setPatientData] = useState(null);
+    const [appointments, setAppointments] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPatientData = async () => {
             const storedPatientId = localStorage.getItem('patient_id');
-            console.log(storedPatientId)
+            console.log(storedPatientId);
 
             const {data, error} = await supabase
                 .from('patients')
@@ -30,8 +31,47 @@ const UserPage = () => {
             }
         };
 
+        const fetchAppointments = async () => {
+            const storedPatientId = localStorage.getItem('patient_id');
+
+            const {data, error} = await supabase
+                .from('times')
+                .select('doctor_id, date')
+                .eq('patient', storedPatientId);
+
+            if (error) {
+                console.error('Помилка завантаження записів:', error.message);
+            } else {
+                const appointmentsWithDoctorNames = await Promise.all(
+                    data.map(async (appointment) => {
+                        const {data: doctorData, error: doctorError} = await supabase
+                            .from('doctors')
+                            .select('first_name, last_name')
+                            .eq('doctor_id', appointment.doctor_id)
+                            .single();
+
+                        if (doctorError) {
+                            console.error('Помилка завантаження лікаря:', doctorError.message);
+                        } else {
+                            return {
+                                ...appointment,
+                                doctor_name: `${doctorData.first_name} ${doctorData.last_name}`,
+                            };
+                        }
+                    })
+                );
+
+                setAppointments(appointmentsWithDoctorNames);
+            }
+        };
+
         fetchPatientData();
+        fetchAppointments();
     }, [patient_id, navigate]);
+
+    const handleBookSession = () => {
+        navigate('/all-therapists');
+    };
 
     return (
         <>
@@ -43,8 +83,7 @@ const UserPage = () => {
                             <section className="section">
                                 <h2 className="section-title">Мої дані</h2>
                                 <p className="info-item"><span
-                                    className="info-label">Ім'я:</span> {patientData.first_name}
-                                </p>
+                                    className="info-label">Ім'я:</span> {patientData.first_name}</p>
                                 <p className="info-item"><span
                                     className="info-label">Прізвище:</span> {patientData.last_name}</p>
                                 <p className="info-item"><span
@@ -59,13 +98,30 @@ const UserPage = () => {
                                 <p className="info-item"><span
                                     className="info-label">Телефон:</span> {patientData.phone_number}</p>
                                 <p className="info-item"><span
-                                    className="info-label">Адреса:</span> {patientData.address}
-                                </p>
+                                    className="info-label">Адреса:</span> {patientData.address}</p>
                             </section>
                         </div>
-                        <div className="card">
+                        <div className="card-two">
                             <section className="section">
                                 <h2 className="section-title">Мої записи</h2>
+                                {appointments.length > 0 ? (
+                                    appointments.map((appointment, index) => (
+                                        <div key={index} className="appointment-item">
+                                            <p><span className="info-label">Спеціаліст:</span> {appointment.doctor_name}
+                                            </p>
+                                            <p><span
+                                                className="info-label">Дата і час:</span> {new Date(appointment.date).toLocaleString()}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div>
+                                        <p>У вас немає записів на прийом.</p>
+                                        <button className="book-session-btn" onClick={handleBookSession}>Забронювати
+                                            сеанс
+                                        </button>
+                                    </div>
+                                )}
                             </section>
                         </div>
                     </div>
@@ -86,7 +142,6 @@ const UserPage = () => {
             <Footer/>
         </>
     );
-
 };
 
 export default UserPage;
