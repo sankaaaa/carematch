@@ -12,6 +12,17 @@ function Header() {
         navigate('/all-therapists');
     };
 
+    const handleMyPage = () => {
+        const patientId = localStorage.getItem('patient_id');
+        if (patientId) {
+            navigate(`/my-account/${patientId}`);
+        } else {
+            alert('Будь ласка, увійдіть у свій акаунт');
+            navigate('/login');
+        }
+    };
+
+
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -53,9 +64,9 @@ function Header() {
                 <Link to="#section3" className={styles.navLink}>
                     Підібрати фахівця
                 </Link>
-                <Link to="#section3" className={styles.navLink}>
+                <Button onPress={handleMyPage} className={styles.navLink}>
                     Мій кабінет
-                </Link>
+                </Button>
                 <button onClick={handleLogout} className={styles.navLink}>
                     <div className={styles.logoutWrapper}>
                         <Logout className={styles.logoutIcon}/>
