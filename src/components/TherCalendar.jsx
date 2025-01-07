@@ -39,14 +39,25 @@ const TherCalendar = () => {
         }
 
         for (let day = 1; day <= daysOfMonth[currentMonth]; day++) {
-            const isSessionDay = sessionDates.some(session => new Date(session.date).getDate() === day);
+            const selectedSessions = sessionDates.filter(session => new Date(session.date).getDate() === day);
+
+            const isSessionDay = selectedSessions.some(session => !session.is_booked);
+
+            const isBooked = selectedSessions.every(session => session.is_booked);
+
             days.push(
                 <div
                     key={day}
                     className={`
-                            ${day === currentDate.getDate() && currentYear === currentDate.getFullYear() && currentMonth === currentDate.getMonth() ? 'current-date' : ''}
-                            ${isSessionDay ? 'rehearsal-date' : ''}
-                        `} onClick={() => handleDayClick(day, isSessionDay)}
+                ${day === currentDate.getDate() && currentYear === currentDate.getFullYear() && currentMonth === currentDate.getMonth() ? 'current-date' : ''}
+                ${isSessionDay ? 'rehearsal-date' : ''}
+                ${isBooked ? 'booked-date' : ''}
+            `}
+                    style={{
+                        pointerEvents: isBooked ? 'none' : 'auto',
+                        backgroundColor: isBooked ? 'transparent' : '',
+                    }}
+                    onClick={() => !isBooked && handleDayClick(day, isSessionDay)}
                 >
                     {day}
                 </div>
@@ -56,23 +67,6 @@ const TherCalendar = () => {
         return days;
     };
 
-    const handleDayClick = (day, isSessionDay) => {
-        if (isSessionDay) {
-            const selectedSessions = sessionDates.filter(session => new Date(session.date).getDate() === day);
-            setSelectedDate(day);
-            const times = selectedSessions.map(session => new Date(session.date).toLocaleTimeString());
-            setSessionTimes(times);
-            setSelectedTime(times.length === 1 ? times[0] : null);
-            setShowSessionForm(true);
-        } else {
-            setShowSessionForm(false);
-        }
-    };
-
-    const handleConfirmSession = () => {
-        console.log('Сеанс підтверджено для дати:', selectedDate, 'та часу:', selectedTime);
-        setShowSessionForm(false);
-    };
 
     useEffect(() => {
         console.log('Doctor ID:', id);
@@ -90,7 +84,7 @@ const TherCalendar = () => {
 
             const {data, error} = await supabase
                 .from('times')
-                .select('date')
+                .select('date, is_booked')
                 .eq('doctor_id', id)
                 .gte('date', startDate)
                 .lte('date', endDate);
@@ -105,6 +99,63 @@ const TherCalendar = () => {
 
         fetchSessionDates();
     }, [currentMonth, currentYear, id]);
+
+    const handleDayClick = (day, isSessionDay) => {
+        if (isSessionDay) {
+            const selectedSessions = sessionDates.filter(session => new Date(session.date).getDate() === day);
+            const availableSessions = selectedSessions.filter(session => !session.is_booked);
+
+            setSelectedDate(day);
+            const times = availableSessions.map(session => new Date(session.date).toLocaleTimeString());
+            setSessionTimes(times);
+            setSelectedTime(times.length === 1 ? times[0] : null);
+            setShowSessionForm(true);
+        } else {
+            setShowSessionForm(false);
+        }
+    };
+
+    const handleConfirmSession = async () => {
+        const patientId = localStorage.getItem('patient_id');
+
+        if (!patientId) {
+            alert('Patient ID не знайдено!');
+            return;
+        }
+
+        const selectedSession = sessionDates.find(session =>
+            new Date(session.date).getDate() === selectedDate &&
+            new Date(session.date).toLocaleTimeString() === selectedTime &&
+            !session.is_booked
+        );
+
+        if (!selectedSession) {
+            alert('Сеанс не знайдено або вже заброньований!');
+            return;
+        }
+
+        const {error} = await supabase
+            .from('times')
+            .update({patient: patientId, is_booked: true})
+            .eq('date', selectedSession.date)
+            .eq('doctor_id', id);
+
+        if (error) {
+            console.error('Error booking session:', error);
+            alert('Помилка під час бронювання.');
+        } else {
+            alert('Сеанс підтверджено!');
+            setSessionDates(prevDates =>
+                prevDates.map(session =>
+                    session.date === selectedSession.date
+                        ? {...session, is_booked: true}
+                        : session
+                )
+            );
+            setShowSessionForm(false);
+        }
+    };
+
 
     const changeMonth = (direction) => {
         setLoading(true);
@@ -166,21 +217,22 @@ const TherCalendar = () => {
                     <div className="session-form">
                         <h4>
                             Дата запису: {selectedDate}.{currentMonth + 1}.{currentYear}
-                        </h4>                        {sessionTimes.length > 1 ? (
-                        sessionTimes.map((time, index) => (
-                            <label key={index}>
-                                <input
-                                    type="radio"
-                                    value={time}
-                                    checked={selectedTime === time}
-                                    onChange={() => setSelectedTime(time)}
-                                />
-                                {time}
-                            </label>
-                        ))
-                    ) : (
-                        <p>{sessionTimes[0]}</p>
-                    )}
+                        </h4>
+                        {sessionTimes.length > 1 ? (
+                            sessionTimes.map((time, index) => (
+                                <label key={index}>
+                                    <input
+                                        type="radio"
+                                        value={time}
+                                        checked={selectedTime === time}
+                                        onChange={() => setSelectedTime(time)}
+                                    />
+                                    {time}
+                                </label>
+                            ))
+                        ) : (
+                            <p>{sessionTimes[0]}</p>
+                        )}
                         <button className="confirmsession" onClick={handleConfirmSession}>
                             Підтвердити сеанс
                         </button>
@@ -194,3 +246,4 @@ const TherCalendar = () => {
 };
 
 export default TherCalendar;
+

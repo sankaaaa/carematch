@@ -364,3 +364,8 @@ span#pre-year {
 .leafIcon:hover {
     transform: scale(1.1);
 }
+
+.booked-date {
+    opacity: 0.5;
+    pointer-events: none;
+}
