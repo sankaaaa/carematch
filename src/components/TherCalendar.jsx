@@ -55,7 +55,6 @@ const TherCalendar = () => {
             `}
                     style={{
                         pointerEvents: isBooked ? 'none' : 'auto',
-                        backgroundColor: isBooked ? 'transparent' : '',
                     }}
                     onClick={() => !isBooked && handleDayClick(day, isSessionDay)}
                 >
