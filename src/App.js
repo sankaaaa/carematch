@@ -7,6 +7,7 @@ import CreateAccount from "./pages/CreateAccount";
 import AllTerapistsPage from "./pages/AllTerapistsPage";
 import TherapistDetails from "./components/TherapistDetails";
 import UserPage from "./pages/UserPage";
+import FindTherapist from "./pages/FindTherapist";
 import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 
@@ -32,6 +33,7 @@ function RoutesComponent() {
             <Route path="/all-therapists" element={<AllTerapistsPage/>}/>
             <Route path="/all-therapists/:id" element={<TherapistDetails/>}/>
             <Route path="/my-account/:id" element={<UserPage/>}/>
+            <Route path="/find-therapist" element={<FindTherapist/>}/>
             <Route path="/" element={<Navigate to="/login"/>}/>
         </Routes>
     );

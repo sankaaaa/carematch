@@ -6,8 +6,7 @@ import {Button, Accordion, AccordionItem} from "@nextui-org/react";
 import mainImage from '../assets/main.png';
 import Frame from '../assets/Frame.svg';
 import block3img from '../assets/block3.png'
-import { Link, useNavigate } from 'react-router-dom';
-
+import {Link, useNavigate} from 'react-router-dom';
 
 
 const MainPage = () => {
@@ -15,6 +14,10 @@ const MainPage = () => {
 
     const handleAllTerapists = () => {
         navigate('/all-therapists');
+    };
+
+    const handleFindTherapist = () => {
+        navigate('/find-therapist');
     };
 
     return (
@@ -37,7 +40,7 @@ const MainPage = () => {
                     </p>
 
                     <div className="button-group">
-                        <Button className="primary-button">
+                        <Button onPress={handleFindTherapist} className="primary-button">
                             Підібрати фахівця
                         </Button>
 

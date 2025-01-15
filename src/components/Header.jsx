@@ -12,6 +12,10 @@ function Header() {
         navigate('/all-therapists');
     };
 
+    const handleFindTherapist = () => {
+        navigate('/find-therapist');
+    }
+
     const handleMyPage = () => {
         const patientId = localStorage.getItem('patient_id');
         if (patientId) {
@@ -61,9 +65,9 @@ function Header() {
                 <Button onPress={handleAllTerapists} className={styles.navLink}>
                     Фахівці
                 </Button>
-                <Link to="#section3" className={styles.navLink}>
+                <Button onPress={handleFindTherapist} className={styles.navLink}>
                     Підібрати фахівця
-                </Link>
+                </Button>
                 <Button onPress={handleMyPage} className={styles.navLink}>
                     Мій кабінет
                 </Button>
