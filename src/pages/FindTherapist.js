@@ -171,7 +171,7 @@ const FindTherapist = () => {
                         {currentStep === 6 && (
                             <div>
                                 <h2>Досвід роботи терапевта</h2>
-                                {['0-5', '6-10', '11-15', '15+'].map(exp => (
+                                {['0-5', '6-10', '11-15', '15+', 'Неважливо'].map(exp => (
                                     <label key={exp}>
                                         <input
                                             type="radio"

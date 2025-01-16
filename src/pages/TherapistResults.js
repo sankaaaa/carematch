@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import supabase from '../config/databaseClient';
@@ -18,19 +18,42 @@ const TherapistResults = () => {
 
     const isAgeMatch = (age, range) => {
         switch (range) {
-            case '20-30': return age >= 20 && age <= 30;
-            case '31-40': return age >= 31 && age <= 40;
-            case '41-50': return age >= 41 && age <= 50;
-            case '50+': return age > 50;
-            case 'Неважливо': return true;
-            default: return true;
+            case '20-30':
+                return age >= 20 && age <= 30;
+            case '31-40':
+                return age >= 31 && age <= 40;
+            case '41-50':
+                return age >= 41 && age <= 50;
+            case '50+':
+                return age > 50;
+            case 'Неважливо':
+                return true;
+            default:
+                return true;
+        }
+    };
+
+    const isExperienceMatch = (experience, range) => {
+        switch (range) {
+            case '0-5':
+                return experience >= 0 && experience <= 5;
+            case '6-10':
+                return experience >= 6 && experience <= 10;
+            case '11-15':
+                return experience >= 11 && experience <= 15;
+            case '15+':
+                return experience > 15;
+            case 'Неважливо':
+                return true;
+            default:
+                return true;
         }
     };
 
     useEffect(() => {
         const fetchTherapistsByCategory = async () => {
             try {
-                const { data: categoryData, error: categoryError } = await supabase
+                const {data: categoryData, error: categoryError} = await supabase
                     .from('categories')
                     .select('category_id, name');
 
@@ -40,7 +63,7 @@ const TherapistResults = () => {
                     .filter(category => filters.specialization.includes(category.name))
                     .map(category => category.category_id);
 
-                const { data: doctorCategoriesData, error: doctorCategoriesError } = await supabase
+                const {data: doctorCategoriesData, error: doctorCategoriesError} = await supabase
                     .from('doctor_categories')
                     .select('doctor_id')
                     .in('category_id', selectedCategoryIds);
@@ -49,7 +72,7 @@ const TherapistResults = () => {
 
                 const doctorIds = [...new Set(doctorCategoriesData.map(doc => doc.doctor_id))];
 
-                const { data: doctorsData, error: doctorsError } = await supabase
+                const {data: doctorsData, error: doctorsError} = await supabase
                     .from('doctors')
                     .select('*')
                     .in('doctor_id', doctorIds);
@@ -58,6 +81,7 @@ const TherapistResults = () => {
 
                 const filteredTherapists = doctorsData.filter(therapist => {
                     const age = calculateAge(therapist.doc_date);
+                    const experience = therapist.experience;
                     let matches = true;
 
                     if (filters.gender && filters.gender !== 'Неважливо') {
@@ -66,6 +90,20 @@ const TherapistResults = () => {
                     }
 
                     if (filters.age && !isAgeMatch(age, filters.age)) {
+                        matches = false;
+                    }
+
+                    if (filters.qualification && filters.qualification !== 'Неважливо') {
+                        const qualificationMatch = filters.qualification === therapist.specialization;
+                        if (!qualificationMatch) matches = false;
+                    }
+
+                    if (filters.workFormat && filters.workFormat !== 'Неважливо') {
+                        const workFormatMatch = filters.workFormat === therapist.meet_fomat;
+                        if (!workFormatMatch) matches = false;
+                    }
+
+                    if (filters.experience && !isExperienceMatch(experience, filters.experience)) {
                         matches = false;
                     }
 
@@ -83,7 +121,7 @@ const TherapistResults = () => {
 
     return (
         <div>
-            <Header />
+            <Header/>
             <div className="therapist-results">
                 <h2>Результати пошуку</h2>
                 {therapists.length > 0 ? (
@@ -101,7 +139,7 @@ const TherapistResults = () => {
                     <p>Не знайдено терапевтів за заданими критеріями.</p>
                 )}
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 };
