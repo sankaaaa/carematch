@@ -60,7 +60,7 @@ const FindTherapist = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data Submitted:', formData);
-        navigate('/therapist-results');
+        navigate('/therapist-results', {state: formData});
     };
 
     return (
@@ -72,7 +72,7 @@ const FindTherapist = () => {
                         {currentStep === 1 && (
                             <div>
                                 <h2>Оберіть стать терапевта</h2>
-                                {['male', 'female', 'another'].map(option => (
+                                {['Чоловік', 'Жінка', 'Неважливо'].map(option => (
                                     <label key={option}>
                                         <input
                                             type="radio"
@@ -81,7 +81,7 @@ const FindTherapist = () => {
                                             checked={formData.gender === option}
                                             onChange={handleChange}
                                         />
-                                        {option === 'male' ? 'Чоловік' : option === 'female' ? 'Жінка' : 'Неважливо'}
+                                        {option === 'Чоловік' ? 'Чоловік' : option === 'Жінка' ? 'Жінка' : 'Неважливо'}
                                     </label>
                                 ))}
                                 <button type="button" className="findther-btn" onClick={nextStep}>Далі</button>
