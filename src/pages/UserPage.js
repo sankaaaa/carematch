@@ -124,6 +124,7 @@ const UserPage = () => {
                                 )}
                             </section>
                         </div>
+                        <Footer/>
                     </div>
                 ) : (
                     <div className="banter-loader">
@@ -139,7 +140,6 @@ const UserPage = () => {
                     </div>
                 )}
             </main>
-            <Footer/>
         </>
     );
 };
