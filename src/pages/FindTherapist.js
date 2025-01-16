@@ -91,7 +91,7 @@ const FindTherapist = () => {
                         {currentStep === 2 && (
                             <div>
                                 <h2>Бажаний вік терапевта</h2>
-                                {['20-30', '31-40', '41-50', '50+'].map(range => (
+                                {['20-30', '31-40', '41-50', '50+', 'Неважливо'].map(range => (
                                     <label key={range}>
                                         <input
                                             type="radio"
