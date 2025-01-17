@@ -3,10 +3,11 @@ import {Link, useNavigate} from 'react-router-dom';
 import styles from '../styles/header.module.css';
 import {ReactComponent as Frame} from '../assets/Frame.svg';
 import {ReactComponent as Logout} from '../assets/logout.svg';
-import {Button} from "@nextui-org/react";
+import {Button} from '@nextui-org/react';
 
 function Header() {
     const navigate = useNavigate();
+    const status = localStorage.getItem('status');
 
     const handleAllTerapists = () => {
         navigate('/all-therapists');
@@ -14,7 +15,7 @@ function Header() {
 
     const handleFindTherapist = () => {
         navigate('/find-therapist');
-    }
+    };
 
     const handleMyPage = () => {
         const patientId = localStorage.getItem('patient_id');
@@ -26,12 +27,10 @@ function Header() {
         }
     };
 
-
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
             const sectionTop = section.offsetTop;
-
             window.scrollTo({
                 top: sectionTop - 20,
                 behavior: 'smooth',
@@ -68,9 +67,13 @@ function Header() {
                 <Button onPress={handleFindTherapist} className={styles.navLink}>
                     Підібрати фахівця
                 </Button>
-                <Button onPress={handleMyPage} className={styles.navLink}>
-                    Мій кабінет
-                </Button>
+
+                {status === 'patient' && (
+                    <Button onPress={handleMyPage} className={styles.navLink}>
+                        Мій кабінет
+                    </Button>
+                )}
+
                 <button onClick={handleLogout} className={styles.navLink}>
                     <div className={styles.logoutWrapper}>
                         <Logout className={styles.logoutIcon}/>
