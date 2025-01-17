@@ -100,7 +100,7 @@ const FindTherapist = () => {
                                             checked={formData.age === range}
                                             onChange={handleChange}
                                         />
-                                        {range}
+                                        {range} {range === 'Неважливо' ? '' : 'років'}
                                     </label>
                                 ))}
                                 <button type="button" className="findther-btn" onClick={prevStep}>Назад</button>
@@ -180,7 +180,7 @@ const FindTherapist = () => {
                                             checked={formData.experience === exp}
                                             onChange={handleChange}
                                         />
-                                        {exp} років
+                                        {exp} {exp === 'Неважливо' ? '' : 'років'}
                                     </label>
                                 ))}
                                 <button type="button" className="findther-btn" onClick={prevStep}>Назад</button>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import "../styles/terapist-card.css";
 
-const TerapistCard = ({ name, experience, location, specialties, professions, photo, doctor_id }) => {
+const TerapistCard = ({name, experience, location, specialties, professions, photo, doctor_id}) => {
     const hasMoreSpecialties = specialties.length > 3;
     const displayedSpecialties = hasMoreSpecialties ? specialties.slice(0, 3) : specialties;
     const remainingCount = specialties.length - 3;
@@ -11,7 +11,7 @@ const TerapistCard = ({ name, experience, location, specialties, professions, ph
         <div className="card-terapist">
             <div className="profile-image">
                 {photo ? (
-                    <img src={photo} alt={name} className="profile-photo" />
+                    <img src={photo} alt={name} className="profile-photo"/>
                 ) : (
                     <div className="placeholder-image"></div>
                 )}

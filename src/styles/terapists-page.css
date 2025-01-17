@@ -4,6 +4,7 @@
     max-width: 1400px;
     padding: 20px 0;
     margin: 0 auto;
+    font-family: 'Craftwork Grotesk', sans-serif;
 }
 
 .cards-container > * {
@@ -14,6 +15,7 @@
 
 .all-terapists-container {
     align-items: center;
+    font-family: 'Craftwork Grotesk', sans-serif;
 }
 
 .filters {

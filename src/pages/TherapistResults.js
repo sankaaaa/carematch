@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import supabase from '../config/databaseClient';
+import TerapistCard from "../components/TerapistCard";
+import '../styles/terapists-page.css';
+import '../styles/loader.css';
 
 const TherapistResults = () => {
     const [therapists, setTherapists] = useState([]);
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const filters = location.state || {};
 
     const calculateAge = (dateString) => {
@@ -14,6 +18,25 @@ const TherapistResults = () => {
         const ageDiff = Date.now() - birthDate.getTime();
         const ageDate = new Date(ageDiff);
         return Math.abs(ageDate.getUTCFullYear() - 1970);
+    };
+
+    const formatExperience = (years) => {
+        const lastDigit = years % 10;
+        const lastTwoDigits = years % 100;
+
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+            return `${years} років`;
+        }
+
+        if (lastDigit === 1) {
+            return `${years} рік`;
+        }
+
+        if (lastDigit >= 2 && lastDigit <= 4) {
+            return `${years} роки`;
+        }
+
+        return `${years} років`;
     };
 
     const isAgeMatch = (age, range) => {
@@ -52,8 +75,9 @@ const TherapistResults = () => {
 
     useEffect(() => {
         const fetchTherapistsByCategory = async () => {
+            setLoading(true);
             try {
-                const { data: categoryData, error: categoryError } = await supabase
+                const {data: categoryData, error: categoryError} = await supabase
                     .from('categories')
                     .select('category_id, name');
 
@@ -63,16 +87,16 @@ const TherapistResults = () => {
                     .filter(category => filters.specialization.includes(category.name))
                     .map(category => category.category_id);
 
-                const { data: doctorCategoriesData, error: doctorCategoriesError } = await supabase
+                const {data: doctorCategoriesData, error: doctorCategoriesError} = await supabase
                     .from('doctor_categories')
-                    .select('doctor_id')
+                    .select('doctor_id, category_id')
                     .in('category_id', selectedCategoryIds);
 
                 if (doctorCategoriesError) throw doctorCategoriesError;
 
                 const doctorIds = [...new Set(doctorCategoriesData.map(doc => doc.doctor_id))];
 
-                const { data: doctorsData, error: doctorsError } = await supabase
+                const {data: doctorsData, error: doctorsError} = await supabase
                     .from('doctors')
                     .select('*')
                     .in('doctor_id', doctorIds);
@@ -113,36 +137,71 @@ const TherapistResults = () => {
                     return matches;
                 });
 
-                setTherapists(filteredTherapists);
+                const therapistsWithSpecialties = await Promise.all(filteredTherapists.map(async (therapist) => {
+                    const {data: doctorSpecializations, error: doctorSpecializationsError} = await supabase
+                        .from('doctor_categories')
+                        .select('category_id')
+                        .eq('doctor_id', therapist.doctor_id);
+
+                    if (doctorSpecializationsError) throw doctorSpecializationsError;
+
+                    const specialties = doctorSpecializations.map(specialty => categoryData.find(cat => cat.category_id === specialty.category_id)?.name || 'Не визначено');
+                    therapist.specialties = specialties;
+                    return therapist;
+                }));
+
+                setTherapists(therapistsWithSpecialties);
             } catch (error) {
                 console.error('Error fetching therapists:', error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchTherapistsByCategory();
     }, [filters]);
 
+
     return (
-        <div>
-            <Header />
+        <div className="all-terapists-container">
+            <Header/>
             <div className="therapist-results">
                 <h2>Результати пошуку</h2>
-                {therapists.length > 0 ? (
-                    <div className="results-container">
-                        {therapists.map((therapist) => (
-                            <div key={therapist.doctor_id} className="therapist-info">
-                                <p><strong>Ім'я:</strong> {therapist.first_name}</p>
-                                <p><strong>Досвід:</strong> {therapist.experience} років</p>
-                                <p><strong>Місце роботи:</strong> {therapist.workFormat}</p>
-                                <p><strong>ID лікаря:</strong> {therapist.doctor_id}</p>
-                            </div>
-                        ))}
+                {loading ? (
+                    <div className="banter-loader">
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
+                        <div className="banter-loader__box"></div>
                     </div>
+                ) : therapists.length > 0 ? (
+                    <div>
+                        <div className="cards-container">
+                            {therapists.map((therapist) => (
+                                <TerapistCard
+                                    key={therapist.doctor_id}
+                                    name={`${therapist.first_name} ${therapist.last_name}`}
+                                    experience={formatExperience(therapist.experience)}
+                                    location={therapist.meet_fomat.includes('Офлайн') ? `Офлайн: ${therapist.city}` : therapist.meet_fomat}
+                                    specialties={therapist.specialties}
+                                    professions={therapist.specialization ? therapist.specialization.split(',') : []}
+                                    photo={therapist.doc_photo}
+                                    doctor_id={therapist.doctor_id}
+                                />
+                            ))}
+                        </div>
+                        <Footer/>
+                    </div>
+
                 ) : (
                     <p>Не знайдено терапевтів за заданими критеріями.</p>
                 )}
             </div>
-            <Footer />
         </div>
     );
 };
