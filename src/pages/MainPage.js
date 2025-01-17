@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/main_style.css';
@@ -7,10 +7,12 @@ import mainImage from '../assets/main.png';
 import Frame from '../assets/Frame.svg';
 import block3img from '../assets/block3.png'
 import {Link, useNavigate} from 'react-router-dom';
+import ChatComponent from "../components/ChatComponent";
 
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const [showChat, setShowChat] = useState(false);
 
     const handleAllTerapists = () => {
         navigate('/all-therapists');
@@ -50,6 +52,13 @@ const MainPage = () => {
                             Усі фахівці
                         </Button>
                     </div>
+
+                    {/*<button className="chat-button" onClick={() => setShowChat(prev => !prev)}>Чат з психологом</button>*/}
+                    {/*{showChat && (*/}
+                    {/*    <div className="chat-box">*/}
+                    {/*        <ChatComponent />*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
                 </div>
             </div>
 
