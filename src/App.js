@@ -11,6 +11,7 @@ import FindTherapist from "./pages/FindTherapist";
 import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import TherapistResults from "./pages/TherapistResults";
+import TherUserPage from "./pages/TherUserPage";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function RoutesComponent() {
             <Route path="/all-therapists" element={<AllTerapistsPage/>}/>
             <Route path="/all-therapists/:id" element={<TherapistDetails/>}/>
             <Route path="/my-account/:id" element={<UserPage/>}/>
+            <Route path="/my-doc-account/:id" element={<TherUserPage/>}/>
             <Route path="/find-therapist" element={<FindTherapist/>}/>
             <Route path="/therapist-results" element={<TherapistResults/>}/>
             <Route path="/" element={<Navigate to="/login"/>}/>

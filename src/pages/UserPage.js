@@ -106,7 +106,7 @@ const UserPage = () => {
                                 <h2 className="section-title">Мої записи</h2>
                                 {appointments.length > 0 ? (
                                     appointments.map((appointment, index) => (
-                                        <div key={index} className="appointment-item">
+                                        <div key={index} className="my-appointment-item">
                                             <p><span className="info-label">Спеціаліст:</span> {appointment.doctor_name}
                                             </p>
                                             <p><span

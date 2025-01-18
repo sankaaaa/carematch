@@ -27,6 +27,16 @@ function Header() {
         }
     };
 
+    const handleMyDocPage = () => {
+        const doctorId = localStorage.getItem('doctor_id');
+        if (doctorId) {
+            navigate(`/my-doc-account/${doctorId}`);
+        } else {
+            alert('Будь ласка, увійдіть у свій акаунт');
+            navigate('/login');
+        }
+    };
+
     const scrollToSection = (sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -70,6 +80,12 @@ function Header() {
 
                 {status === 'patient' && (
                     <Button onPress={handleMyPage} className={styles.navLink}>
+                        Мій кабінет
+                    </Button>
+                )}
+
+                {status === 'doctor' && (
+                    <Button onPress={handleMyDocPage} className={styles.navLink}>
                         Мій кабінет
                     </Button>
                 )}
