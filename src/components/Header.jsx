@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import styles from '../styles/header.module.css';
 import {ReactComponent as Frame} from '../assets/Frame.svg';
 import {ReactComponent as Logout} from '../assets/logout.svg';
@@ -49,11 +49,15 @@ function Header() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
-        sessionStorage.removeItem('user');
-        localStorage.clear();
+        localStorage.removeItem('status');
+        localStorage.removeItem('patient_id');
+        localStorage.removeItem('doctor_id');
+        sessionStorage.removeItem('status');
+        sessionStorage.removeItem('patient_id');
+        sessionStorage.removeItem('doctor_id');
         navigate('/login');
     };
+
 
     const handleAboutUsClick = () => {
         navigate('/main', {replace: true});

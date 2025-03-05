@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/main_style.css';
@@ -6,13 +6,11 @@ import {Button, Accordion, AccordionItem} from "@nextui-org/react";
 import mainImage from '../assets/main.png';
 import Frame from '../assets/Frame.svg';
 import block3img from '../assets/block3.png'
-import {Link, useNavigate} from 'react-router-dom';
-import ChatComponent from "../components/ChatComponent";
+import {useNavigate} from 'react-router-dom';
 
 
 const MainPage = () => {
     const navigate = useNavigate();
-    const [showChat, setShowChat] = useState(false);
 
     const handleAllTerapists = () => {
         navigate('/all-therapists');
@@ -52,13 +50,6 @@ const MainPage = () => {
                             Усі фахівці
                         </Button>
                     </div>
-
-                    {/*<button className="chat-button" onClick={() => setShowChat(prev => !prev)}>Чат з психологом</button>*/}
-                    {/*{showChat && (*/}
-                    {/*    <div className="chat-box">*/}
-                    {/*        <ChatComponent />*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
                 </div>
             </div>
 
@@ -91,7 +82,7 @@ const MainPage = () => {
 
                     <div className="stat-texts">
                         <div className="stat-subtitle-container">
-                            <img className="stat-subtitle-icon" src={Frame}/>
+                            <img className="stat-subtitle-icon" src={Frame} alt="text"/>
                             <div className="text-green text-4xl font-semibold stat-subtitle">
                                 Освіта та досвід
                             </div>
@@ -103,7 +94,7 @@ const MainPage = () => {
                         </div>
 
                         <div className="stat-subtitle-container">
-                            <img className="stat-subtitle-icon" src={Frame}/>
+                            <img className="stat-subtitle-icon" src={Frame} alt="text"/>
                             <div className="text-green text-4xl font-semibold stat-subtitle">
                                 Підвищення кваліфікації
                             </div>
@@ -115,7 +106,7 @@ const MainPage = () => {
                         </div>
 
                         <div className="stat-subtitle-container">
-                            <img className="stat-subtitle-icon" src={Frame}/>
+                            <img className="stat-subtitle-icon" src={Frame} alt="text"/>
                             <div className="text-green text-4xl font-semibold stat-subtitle">
                                 Співбесіда та випробувальний термін
                             </div>
