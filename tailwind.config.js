@@ -16,19 +16,19 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            background: "#fcfec3",
-            foreground: "#00410a",
+            // background: "#fcfec3",
+            // foreground: "#00410a",
             primary: {
-              foreground: "#fcfec3",
+              // foreground: "#fcfec3",
             },
           },
         },
         dark: {
           colors: {
-            background: "#00410a",
-            foreground: "#fcfec3",
+            // background: "#00410a",
+            // foreground: "#fcfec3",
             primary: {
-              foreground: "#FFFFFF",
+              // foreground: "#FFFFFF",
               DEFAULT: "#006FEE",
             },
           },

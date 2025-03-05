@@ -1,7 +1,16 @@
+:root {
+    --bg-color: #fcfec3;
+    --text: #00410a;
+    --input-bg: #E7E9AF;
+    --button-bg: #00410a;
+    --button-hover-bg: #002005;
+    --error-color: darkred;
+}
+
 .createacc-page {
     position: relative;
     display: flex;
-    background-color: #fcfec3;
+    background-color: var(--bg-color);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     height: 100vh;
     font-family: 'Craftwork Grotesk', sans-serif;
@@ -9,7 +18,7 @@
 
 .createacc-container {
     width: 60%;
-    background-color: #fcfec3;
+    background-color: var(--bg-color);
     justify-content: center;
     display: flex;
     flex-direction: column;
@@ -29,7 +38,7 @@
 
 .header h2 {
     font-size: 30px;
-    color: #00410a;
+    color: var(--text);
     text-align: center;
     padding: 10px;
     margin-top: 3%;
@@ -38,7 +47,7 @@
 
 .header p {
     font-size: 15px;
-    color: #00410a;
+    color: var(--text);
     text-align: center;
     margin-bottom: 30px;
     font-weight: bold;
@@ -53,7 +62,7 @@
 .divider {
     text-align: center;
     margin: 20px 0;
-    color: #00410a;
+    color: var(--text);
     padding: 10px;
     font-weight: bold;
 }
@@ -66,29 +75,29 @@
 
 .input-container input {
     width: 100%;
-    border: 1px solid #E7E9AF;
+    border: 1px solid var(--input-bg);
     border-radius: 5px;
     font-size: 16px;
-    background-color: #E7E9AF;
+    background-color: var(--input-bg);
     font-family: 'Craftwork Grotesk', sans-serif;
     padding: 12px 12px 12px 20px;
     outline: none;
-    color: #00410a;
+    color: var(--text);
 }
 
 .input-container input::placeholder {
-    color: #00410a;
+    color: var(--text);
 }
 
 .input-container input:focus {
-    border-color: #00410a;
+    border-color: var(--text);
 }
 
 .login-button,
 .prev-button {
     width: 40%;
     padding: 12px;
-    background-color: #00410a;
+    background-color: var(--text);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -109,7 +118,7 @@
 
 .pattern {
     width: 50%;
-    background-color: #00410a;
+    background-color: var(--text);
     background-image: url('../assets/Frame1.png');
     background-size: 800px;
     background-repeat: repeat;
@@ -125,7 +134,7 @@
 }
 
 .logoText {
-    color: #00410a;
+    color: var(--text);
     font-size: 22px;
     font-weight: bold;
     font-family: 'Craftwork Grotesk', sans-serif;
@@ -133,7 +142,7 @@
 }
 
 .error {
-    color: darkred;
+    color: var(--error-color);
     margin-top: 2%;
 }
 
@@ -142,7 +151,7 @@
     align-items: center;
     margin-bottom: 10px;
     cursor: pointer;
-    color: #00410a;
+    color: var(--text);
     font-size: 16px;
 }
 
@@ -150,7 +159,7 @@
     appearance: none;
     width: 10px;
     height: 10px;
-    border: 2px solid #00410a;
+    border: 2px solid var(--text);
     border-radius: 3px;
     margin-right: 10px;
     cursor: pointer;
@@ -159,7 +168,7 @@
 }
 
 .input-container input[type="checkbox"]:checked {
-    background-color: #00410a;
+    background-color: var(--text);
 }
 
 .input-container input[type="checkbox"]:checked::before {
@@ -172,6 +181,6 @@
 }
 
 .input-container p {
-    color: #00410a;
+    color: var(--text);
     font-weight: bold;
 }
