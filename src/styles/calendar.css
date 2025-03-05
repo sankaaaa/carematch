@@ -173,7 +173,7 @@ span#pre-year {
 
 .month-list:hover {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: #D9F99DFF;
     transform: scale(0.9);
     transition: all 0.2s ease-in-out;
 }
@@ -321,7 +321,7 @@ span#pre-year {
 
 .calendar-days div:hover {
     transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-    background-color: var(--secondary-color);
+    background-color: #D9F99DFF;
     border-radius: 20%;
     color: var(--primary-color);
 }

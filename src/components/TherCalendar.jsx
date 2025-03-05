@@ -15,6 +15,12 @@ const TherCalendar = () => {
     const [sessionTimes, setSessionTimes] = useState([]);
     const [selectedTime, setSelectedTime] = useState(null);
     const [showSessionForm, setShowSessionForm] = useState(false);
+    const [isPatient, setIsPatient] = useState(false);
+
+    useEffect(() => {
+        const status = localStorage.getItem('status');
+        setIsPatient(status === 'patient');
+    }, []);
 
     const monthNames = [
         'Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',
@@ -232,9 +238,11 @@ const TherCalendar = () => {
                         ) : (
                             <p>{sessionTimes[0]}</p>
                         )}
-                        <button className="confirmsession" onClick={handleConfirmSession}>
-                            Підтвердити сеанс
-                        </button>
+                        {isPatient && (
+                            <button className="confirmsession" onClick={handleConfirmSession}>
+                                Підтвердити сеанс
+                            </button>
+                        )}
                     </div>
                 )}
             </div>
